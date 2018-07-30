@@ -26,7 +26,7 @@ class sgf_data(object):
         return x + (self.size + 1 - y) * (self.size + 2)
 
     def import_file(self, file_path):
-        f = open(file_path)
+        f = open(file_path, 'r', encoding='utf-8')
         lines = f.readlines()
         for line in lines:
             str = line.rstrip("\n")

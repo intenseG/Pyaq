@@ -13,7 +13,7 @@ if __name__ == "__main__":
     args = sys.argv
 
     launch_mode = 0  # 0: gtp, 1: self, 2: learn
-    byoyomi = 3.0
+    byoyomi = 5.0
     main_time = 0.0
     quick = False
     random = False

@@ -116,6 +116,10 @@ class DualNetwork(object):
         with tf.get_default_graph().as_default():
 
             sess_ = tf.Session(config=tf.ConfigProto(
+                gpu_options=tf.GPUOptions(
+                    per_process_gpu_memory_fraction=0.9, # 最大値の90%まで
+                    allow_growth=True # True->必要になったら確保, False->全部
+                ),
                 allow_soft_placement=True, log_device_placement=False))
             vars_train = tf.get_collection("vars_train")
             v_to_init = list(set(tf.global_variables()) - set(vars_train))
