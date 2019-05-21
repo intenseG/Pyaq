@@ -5,7 +5,7 @@ from sys import stderr
 import numpy as np
 
 
-BSIZE = 9  # board size
+BSIZE = 19  # board size
 EBSIZE = BSIZE + 2  # extended board size
 BVCNT = BSIZE ** 2  # vertex count
 EBVCNT = EBSIZE ** 2  # extended vertex count
@@ -323,7 +323,7 @@ class Board(object):
         print_xlabel()
 
         for y in range(1, BSIZE + 1)[::-1]:  # 9, 8, ..., 1
-            line_str = str(y) if y >= 10 else " " + str(y)
+            line_str = str(y) if y >= BSIZE + 1 else " " + str(y)
             for x in range(1, BSIZE + 1):
                 v = xy2ev(x, y)
                 x_str = " . "
@@ -335,7 +335,7 @@ class Board(object):
                     else:
                         x_str = " " + stone_str + " "
                 line_str += x_str
-            line_str += str(y) if y >= 10 else " " + str(y)
+            line_str += str(y) if y >= BSIZE + 1 else " " + str(y)
             stderr.write(line_str + "\n")
 
         print_xlabel()
