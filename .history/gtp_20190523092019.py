@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from sys import stderr, stdout, stdin
+from threading import Thread
 import numpy as np
 from board import *
 from search import Tree
@@ -38,12 +39,16 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
     tree.main_time = main_time
     tree.byoyomi = byoyomi
 
+    th = None
     while 1:
         str = stdin.readline().rstrip("\r\n")
         if str == "":
             continue
         Tree.stop = True
-        if include(str, "protocol_version"):
+        if th:
+            th.join()
+        Tree.stop = False
+        elif include(str, "protocol_version"):
             send("2")
         elif include(str, "name"):
             send("Pyaq")
@@ -85,6 +90,8 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
             else:
                 b.play(move)
                 send(ev2str(move))
+                th = Thread(target=lambda tree, b, clean: tree.search(b, float('inf'), ponder=True, clean=clean), args=(tree, b, clean))
+                th.start()
         elif include(str, "play"):
             b.play(str2ev(args(str)[1]), not_fill_eye=False)
             send("")

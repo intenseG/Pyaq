@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from sys import stderr, stdout, stdin
+from threading import Thread
 import numpy as np
 from board import *
 from search import Tree
@@ -38,6 +39,7 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
     tree.main_time = main_time
     tree.byoyomi = byoyomi
 
+    th = None
     while 1:
         str = stdin.readline().rstrip("\r\n")
         if str == "":

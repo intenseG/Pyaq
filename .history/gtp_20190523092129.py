@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from sys import stderr, stdout, stdin
+from threading import Thread
 import numpy as np
 from board import *
 from search import Tree
