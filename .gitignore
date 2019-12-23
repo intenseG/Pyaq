@@ -1,6 +1,11 @@
 
 # Created by https://www.gitignore.io/api/python
 
+kgsGtp.*
+model.*
+pyaq_config*.txt
+start.bat
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

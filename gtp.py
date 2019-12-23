@@ -64,11 +64,13 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
             send("")
         elif include(str, "time_settings"):
             arg_list = args(str)
-            tree.main_time = arg_list[0]
-            tree.left_time = tree.main_time
-            tree.byoyomi = arg_list[1]
+            tree.main_time = float(arg_list[0])
+            tree.left_time = float(tree.main_time)
+            tree.byoyomi = float(arg_list[1])
+            send("")
         elif include(str, "time_left"):
             tree.left_time = float(args(str)[1])
+            send("")
         elif include(str, "clear_board"):
             b.clear()
             tree.clear()
