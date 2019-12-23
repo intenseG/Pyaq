@@ -5,7 +5,7 @@ from sys import stderr
 import numpy as np
 
 
-BSIZE = 19  # board size
+BSIZE = 9  # board size
 EBSIZE = BSIZE + 2  # extended board size
 BVCNT = BSIZE ** 2  # vertex count
 EBVCNT = EBSIZE ** 2  # extended vertex count
