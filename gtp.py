@@ -11,6 +11,7 @@ cmd_list = [
     "protocol_version", "name", "version", "list_commands",
     "boardsize", "komi", "time_settings", "time_left",
     "clear_board", "genmove", "play", "undo",
+    "kgs-genmove_cleanup", "final_status_list",
     "gogui-play_sequence", "showboard", "quit"
 ]
 
@@ -98,12 +99,25 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
                 b.play(v, not_fill_eye=False)
 
             send("")
-        elif include(str, "gogui-play_sequence"):
-            arg_list = args(str)
-            for i in range(1, len(arg_list) + 1, 2):
-                b.play(str2ev(arg_list[i]), not_fill_eye=False)
+        elif include(str, "kgs-genmove_cleanup"):
+            if quick:
+                move = rv2ev(np.argmax(tree.evaluate(b)[0][0]))
+            else:
+                move, win_rate = tree.search(b, 0, ponder=False, clean=clean)
 
+            if win_rate < 0.1:
+                send("resign")
+            else:
+                b.play(move)
+                send(ev2str(move))
+        elif include(str, "final_status_list"):
             send("")
+        # elif include(str, "gogui-play_sequence"):
+        #     arg_list = args(str)
+        #     for i in range(1, len(arg_list) + 1, 2):
+        #         b.play(str2ev(arg_list[i]), not_fill_eye=False)
+
+        #     send("")
         elif include(str, "showboard"):
             b.showboard()
             send("")
