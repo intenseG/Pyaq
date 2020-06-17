@@ -78,7 +78,8 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
                 stdout.write(cmd + "\n")
             stdout.write("\n")
             stdout.flush()
-        ### 碁盤サイズ
+        ### 碁盤サイズ(board.pyのBSIZE変数の値と一致する必要あり)
+        # コマンド引数: 碁盤サイズ
         # 入力例: boardsize 9
         elif include(str, "boardsize"):
             bs = int(args(str)[0])
