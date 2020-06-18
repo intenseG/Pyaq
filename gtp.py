@@ -31,11 +31,12 @@ def send(res_cmd):
 # 空白区切りの文字列を空白で分割してリストで返す関数
 def args(str):
     # 空白区切りの文字列を空白でsplit関数で分割してリスト化する
-    # 例: 第1引数strの中身が = 300 15 3 の場合、=, 300, 15, 3 の4つの要素を含むリストを返す
+    # 例: 第1引数strの中身が time_settings 300 15 3 の場合、time_settings, 300, 15, 3 の4つの要素を含むリストを返す
     arg_list = str.split()
     # リストの先頭の要素が = であればpop関数で0番目の要素を削除する
     if arg_list[0] == "=":
         arg_list.pop(0)
+    # リストの先頭にあるGTPコマンドの文字列(time_settingsなど)を削除する
     arg_list.pop(0)
     return arg_list
 
