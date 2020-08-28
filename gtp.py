@@ -15,6 +15,13 @@ cmd_list = [
     "gogui-play_sequence", "showboard", "quit"
 ]
 
+# 置碁の固定石座標リスト(9路, 13路, 19路対応)
+handicap_stones = [
+    ["G7", "C3", "G3", "C7", "G5", "C5", "E7", "E3", "E5"],
+    ["K10", "D4", "K4", "D10", "K7", "D7", "G10", "G4", "G7"],
+    ["R16", "D4", "R4", "D16", "R10", "D10", "K16", "K4", "K10"]
+]
+
 
 # strにcmdが含まれていればTrue、そうでなければFalseを返す汎用関数
 def include(str, cmd):
@@ -135,6 +142,31 @@ def call_gtp(main_time, byoyomi, quick=False, clean=False, use_gpu=True):
         # 入力例: play b Q16
         elif include(str, "play"):
             b.play(str2ev(args(str)[1]), not_fill_eye=False)
+            send("")
+        ### 置石数を指定して盤面に配置
+        # コマンド引数: 置石数
+        # 入力例: place_free_handicap 4
+        elif include(str, "place_free_handicap"):
+            if BSIZE == 9:
+                board_type = 0
+            elif BSIZE == 13:
+                board_type = 1
+            elif BSIZE == 19:
+                board_type = 2
+            else:
+                stdout.write("?invalid boardsize\n\n")
+
+            n = int(args(str)[0])
+            for i in range(n):
+                b.color[str2ev(handicap_stones[board_type][i])] = 1
+            send("")
+        ### 自由置碁の場合、座標を複数指定して盤面に配置
+        # コマンド引数: 置石数
+        # 入力例: set_free_handicap G7 C3 G3 C7
+        elif include(str, "set_free_handicap"):
+            arg_list = args(str)
+            for s in arg_list:
+                b.color[str2ev(s)] = 1
             send("")
         ### マッタ(1手戻す)
         # 入力例: undo
